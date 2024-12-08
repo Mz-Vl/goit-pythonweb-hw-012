@@ -12,3 +12,7 @@ cloudinary
 python-jose
 pydantic[email]
 redis
+pytest
+pytest-cov
+pytest-mock
+pytest-asyncio

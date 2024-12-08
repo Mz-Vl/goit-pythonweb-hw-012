@@ -1,8 +1,6 @@
 from typing import Optional
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from src.database.models import User, Role
 from src.schemas.user import UserCreate
 
@@ -20,6 +18,7 @@ class UserRepository:
         Returns:
             User: Created user
         """
+        print(f"session-------------------: {self.session}")
         user = User(username=body.username, email=body.email, password=hashed_password, role=body.role)
         self.session.add(user)
         await self.session.commit()

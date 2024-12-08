@@ -112,11 +112,15 @@ def send_reset_password_email(email: str, token: str):
         None
 
     """
-    msg = MIMEText(f"Your password reset token is: {token}")
-    msg['Subject'] = 'Password Reset'
-    msg['From'] = 'your_email@example.com'
-    msg['To'] = email
+    try:
+        msg = MIMEText(f"Your password reset token is: {token}")
+        msg['Subject'] = 'Password Reset'
+        msg['From'] = 'your_email@example.com'
+        msg['To'] = email
 
-    with smtplib.SMTP('smtp.example.com') as server:
-        server.login('your_email@example.com', 'your_password')
-        server.sendmail('your_email@example.com', [email], msg.as_string())
+        with smtplib.SMTP('smtp.example.com', 587) as server:
+            server.starttls()
+            server.login('your_email@example.com', 'your_password')
+            server.sendmail('your_email@example.com', [email], msg.as_string())
+    except Exception as e:
+        print(f"Failed to send email: {e}")
